@@ -1,0 +1,116 @@
+*{
+    margin: 0;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+h1{
+    margin: 10px;
+}
+
+.msg {
+    height: 40px;
+}
+
+.info {
+    display: flex;
+    width: 50%;
+    margin: auto;
+    font-weight: bold;
+    justify-content: space-around;
+}
+
+.game {
+    position:inherit;
+    width:90%;
+    margin:10px auto;
+    background-image: linear-gradient(#005a8d, #a0aaff);
+    overflow: hidden;
+}
+
+.Percy {
+    position: absolute;
+    width:  25px;
+    height: 25px;
+    margin: 10px 0 0 50px;
+    transition: 0.1s;
+}
+
+#skycrane {
+    width:100%;
+    height:18px;
+    background-image: radial-gradient(#fff,#baa);
+    border-radius: 50px 50px 0 0;
+}
+#Perseverance {
+    height: 7px;
+    background-image: radial-gradient(#fff,#baa);
+}
+
+.ground {
+    width:  100%;
+    height: 100px;
+    background: #c1440e;
+    border-top: 5px dotted black;
+}
+
+.target {
+    position: absolute;
+    width:  50px;
+    height: 25px;
+    background: green;
+    padding-top:10px;
+    border-radius: 5px 5px 0 0;
+    margin: -500px 500px;
+}
+
+#thrust1 {
+    display: none;
+    position: absolute;
+    height: 10px;
+    width: 1px;
+    transform: rotate(10deg);
+    box-shadow: 2px 2px 1px 1px orange;
+    margin: 15px -3px;
+}
+#thrust2 {
+    display: none;
+    position: absolute;
+    height: 10px;
+    width: 1px;
+    transform: rotate(-10deg);
+    box-shadow: 2px 2px 1px 1px orange;
+    margin: 15px 22px;
+}
+
+#parachute {
+    position: absolute;
+    width:80px;
+    height: 50px;
+    background: linear-gradient(
+        to bottom, 
+        white 0%, white  70%, 
+        black 0%, black 80%,
+        orange 0%
+    );
+ 
+    margin: 10px 0 0 50px;
+    transition: 0.1s;
+    border-radius:100px 100px 0 0;
+}
+
+.score {
+    float:right;
+    font-weight: bold;
+    color: white;
+    margin:10px;
+}
+
+#reset {
+    float:  right;
+    margin: 0 5%;
+    border-style: none;
+    padding: 3px 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
