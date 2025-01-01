@@ -22,8 +22,10 @@ h1{
 
 .game {
     position:inherit;
-    width:90%;
-    margin:10px auto;
+    width:100%;
+    position: fixed;
+    top: 0;
+    z-index: -1;
     background-image: linear-gradient(#005a8d, #a0aaff);
     overflow: hidden;
 }
@@ -61,7 +63,7 @@ h1{
     background: green;
     padding-top:10px;
     border-radius: 5px 5px 0 0;
-    margin: -500px 500px;
+    bottom: 0;
 }
 
 #thrust1 {

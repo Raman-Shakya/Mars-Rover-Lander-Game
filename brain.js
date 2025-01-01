@@ -1,6 +1,8 @@
-let game_height = 450
+let game_height = window.innerHeight
+let game_width = window.innerWidth
 let gravity = 0.3
 let targetPoint = 500
+let ground_height = 50
 
 document.querySelector(".game .target").style.marginLeft = targetPoint+"px"
 
@@ -10,7 +12,7 @@ function delay(n){
 
 function background(){
     document.querySelector(".game").style.height = game_height+"px"
-    document.querySelector(".game .ground").style.margin = game_height*0.9+"px 0"
+    document.querySelector(".game .ground").style.margin = (game_height - ground_height) +"px 0"
 }
 
 class Rover{
@@ -33,14 +35,17 @@ class Rover{
         this.paraHeight = 50
         this.paraWidth  = 80
         this.dtPara = 100
+        this.skyCraneHeight = 18
+        this.percyHeight = 7
         this.ParachutePos()
         this.state = state
         this.sepDist = 0
         // Angle is measured with vertical axis to ground in radians
         this.Angle = Math.PI*.75
         this.thrustVal = 0
+        this.pause = true
     }
-    render(){
+    render() {
         let Angle = toDegrees(this.Angle)
         document.querySelector("#vectorShow").innerHTML = `[ ${Math.round(this.vector[0]*100)/100}, ${Math.round(this.vector[1]*100)/100} ]`
         document.querySelector("#angle").innerHTML = (Math.round(toDegrees(this.Angle)*10)/10)
@@ -48,14 +53,15 @@ class Rover{
         document.querySelector(".game #parachute").style.margin = `${this.paraY}px ${this.paraX}px`
         document.querySelector(this.path).style.transform = `rotate(${90-Angle}deg)`
         document.querySelector(".game #parachute").style.transform = `rotate(${90-Angle}deg)`
-        document.querySelector(".score").innerHTML = Math.floor((screen.width-(Math.abs(targetPoint-this.xcor)))*100)/100
+        document.querySelector(".score").innerHTML = Math.floor((game_width-(Math.abs(targetPoint-this.xcor)))*100)/100
         document.querySelector(".msg").innerHTML = 
             this.state == 0 ? "Atmospheric Entry":
             this.state == 1 ? "Parachute Deploy":
             this.state == 2 ? "Powered Descent":
             this.state == 3 ? "Near Touchdown":""
     }
-    next_pos(){
+    next_pos() {
+        if (!this.pause) return
         // gravity
         this.vector = add(this.vector,[0, gravity])
         // state machine
@@ -77,12 +83,12 @@ class Rover{
                 document.querySelector(".game .Percy #Perseverance").style.marginTop = `${this.sepDist++}px`
         }
         // game over detection
-        if (this.ycor+this.sepDist > game_height*0.84){
-            this.ycor = game_height*0.84 - this.sepDist
+        if (this.ycor + this.sepDist + this.skyCraneHeight + this.percyHeight > game_height - ground_height){
+            this.ycor = game_height - ground_height - (this.sepDist + this.skyCraneHeight + this.percyHeight)
             this.state = 4
             return (Math.abs(this.vector[1])<=0.5 && Math.abs(this.vector[0])<=0.5)?"LANDED SUCCESSFULLY :D":"PERSEVERANCE CRASHED :("
         }
-        if (this.xcor<0 || this.xcor>screen.width*.9 || this.ycor<0){
+        if (this.xcor<0 || this.xcor>game_width || this.ycor<0){
             return "Perseverance Went Off The Screen"
         }
         this.xcor += this.vector[0]
@@ -96,15 +102,15 @@ class Rover{
     Thrust(F){
         // assuming thrust comes from bottom of the craft
         if (this.state<2) return
-        document.querySelector(".game .Percy #skycrane #thrust1").style.height = `${F*20}px`
-        document.querySelector(".game .Percy #skycrane #thrust2").style.height = `${F*20}px`
+        document.querySelector("#thrust1").style.height = `${F*20}px`
+        document.querySelector("#thrust2").style.height = `${F*20}px`
         if (this.thrustVal>0){
-            document.querySelector(".game .Percy #skycrane #thrust1").style.display = "block"
-            document.querySelector(".game .Percy #skycrane #thrust2").style.display = "block"
+            document.querySelector("#thrust1").style.display = "block"
+            document.querySelector("#thrust2").style.display = "block"
         }
         else {
-            document.querySelector(".game .Percy #skycrane #thrust1").style.display = "none"
-            document.querySelector(".game .Percy #skycrane #thrust2").style.display = "none"
+            document.querySelector("#thrust1").style.display = "none"
+            document.querySelector("#thrust2").style.display = "none"
         }
         let Angle = this.Angle
         this.vector = subtract(this.vector, [-F*Math.cos(Angle), F*Math.sin(Angle)])
@@ -114,6 +120,9 @@ class Rover{
     }
     Left(){
         this.Angle = (this.Angle + Math.PI/36)%(Math.PI*2)
+    }
+    togglePlay() {
+        this.play = !this.play
     }
 }
 
@@ -131,18 +140,36 @@ document.onkeydown = function (x){
         Percy.state+=Percy.state<3?1:0
 }
 
-async function play(){
+async function play() {
+    window.clearInterval(gameInterval);
+    
     Percy = new Rover([40, 1], 10, 10, ".game .Percy")
+    Percy.render();
     await delay(1000)
-    while (true){
-        a = Percy.next_pos()
-        if (a) break
-        Percy.render()
-        await delay(100)
+    running = false
+
+    document.getElementById('play-button').addEventListener('click', start);
+    start()
+    
+    function start() {
+        running = !running
+        if (running) {
+            gameInterval = window.setInterval(() => {
+                let a = Percy.next_pos()
+                Percy.render();
+                if (a) {
+                    document.querySelector(".msg").innerHTML = a
+                    document.querySelector(".score").innerHTML = Math.floor((game_width-(Math.abs(targetPoint-Percy.xcor)))*100)/100
+                    window.clearInterval(gameInterval);
+                }
+            }, 100);
+        }
+        else {
+            window.clearInterval(gameInterval)
+        }
     }
-    document.querySelector(".msg").innerHTML = a
-    document.querySelector(".score").innerHTML = Math.floor((screen.width-(Math.abs(targetPoint-Percy.xcor)))*100)/100
 }
 
+var gameInterval, running;
 background()
 play()
