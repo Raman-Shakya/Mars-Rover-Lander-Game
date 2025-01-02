@@ -8,11 +8,26 @@
     <title>Percy landing GAME</title>
 </head>
 <body>
-    <h1>Land Perseverance</h1>
-    <button id="reset" onclick="play()">reset</button>
-    <h2 class="msg"></h2>
+    <header>
+        <div>
+            <div class="info">
+                <div class="score"></div>
+                <div>vector = <i id="vectorShow"></i></div>
+                <div>angle  = <i id="angle"></i></div>
+            </div>
+        </div>
+        <div>
+            <h1>Land Perseverance</h1>
+            <h2 class="msg"></h2>
+        </div>
+        <div class="play-button-wrapper">
+            <input id="play-button" type="checkbox" checked>
+            <label for="play-button" class="play-icon"></label>
+            <button id="reset" onclick="play()"><img src="./assets/reset.png"></button>
+        </div>
+    </header>
+
     <div class="game">
-        <div class="score"></div>
         <div id="parachute"></div>
         <div class="Percy">
             <div id="skycrane">
@@ -23,13 +38,6 @@
         </div>
         <div class="ground"></div>
         <div class="target">↑↑↑</div>
-    </div>
-    <div class="info">
-        <div>vector = <i id="vectorShow"></i></div>
-        <div>angle  = <i id="angle"></i></div>
-    </div>
-    <div class="play-button-wrapper">
-        <input id="play-button" type="checkbox" checked>
     </div>
     <script src="vector.js"></script>
     <script src="brain.js"></script>

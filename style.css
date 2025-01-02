@@ -4,20 +4,51 @@
     font-family: sans-serif;
 }
 
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1em 2em;
+    gap: 4em;
+}
+header div {
+    flex: 1;
+}
+
 h1{
-    margin: 10px;
+    margin: 20px;
+    color: white;
 }
 
 .msg {
-    height: 40px;
+    width: 400px;
+    margin: auto;
+    color: #cdcdcd;
+    font-size: 16px;
+    padding: 10px;
+    color: #555555;
+    justify-content: left;
+    background: #c4c4c4bb;
+    border: 3px solid #555555;
+    border-radius: 1em;
+    box-shadow: inset 0 0 10px #555555;
 }
 
 .info {
     display: flex;
-    width: 50%;
-    margin: auto;
+    flex-direction: column;
+    width: 200px;
+    padding: 1em 1.5em;
     font-weight: bold;
-    justify-content: space-around;
+    color: #555555;
+    justify-content: left;
+    background: #c4c4c4bb;
+    border: 3px solid #555555;
+    border-radius: 1em;
+    box-shadow: inset 0 0 10px #555555;
+}
+.info div {
+    text-align: left;
 }
 
 .game {
@@ -86,6 +117,7 @@ h1{
 }
 
 #parachute {
+    display: none;
     position: absolute;
     width:80px;
     height: 50px;
@@ -103,9 +135,10 @@ h1{
 
 .score {
     float:right;
+    font-size: 19px;
     font-weight: bold;
-    color: white;
-    margin:10px;
+    color: #707070;
+    margin: 10px 0;
 }
 
 #reset {
@@ -115,4 +148,55 @@ h1{
     padding: 3px 10px;
     border: 1px solid black;
     border-radius: 5px;
+}
+
+#play-button {
+    display: none;
+}
+.play-button-wrapper {
+    text-align: right;
+}
+
+.play-button-wrapper {
+    display: flex;
+    justify-content: right;
+}
+.play-icon, #reset {
+    padding: 0.7em;
+    width: 1.5em;
+    height: 1.5em;
+    text-align: center;
+    display: inline-block;
+    background: #c4c4c4bb;
+    border: 3px solid #555555;
+    border-radius: 1em;
+    box-shadow: inset 0 0 10px #555555;
+    cursor: pointer;
+}
+#reset {
+    width: auto;
+    height: auto;
+}
+#reset img {
+    width: 20px;
+    display: block;
+}
+.play-icon:hover, #reset:hover {
+    transform: scale(1.03);
+}
+.play-icon::before {
+    content: '';
+    display: block;
+    height: 100%;
+    background: url(./assets/play-button.png);
+    background-size: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+#play-button:checked + .play-icon::before {
+    content: '';
+    background: url(./assets/pause-button.png);
+    background-size: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
 }

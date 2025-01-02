@@ -143,7 +143,7 @@ document.onkeydown = function (x){
 async function play() {
     window.clearInterval(gameInterval);
     
-    Percy = new Rover([40, 1], 10, 10, ".game .Percy")
+    Percy = new Rover([40, 10], 10, 10, ".game .Percy")
     Percy.render();
     await delay(1000)
     running = false
@@ -160,6 +160,7 @@ async function play() {
                 if (a) {
                     document.querySelector(".msg").innerHTML = a
                     document.querySelector(".score").innerHTML = Math.floor((game_width-(Math.abs(targetPoint-Percy.xcor)))*100)/100
+                    running = false
                     window.clearInterval(gameInterval);
                 }
             }, 100);
