@@ -44,6 +44,9 @@ class Rover{
         this.Angle = Math.PI*.75
         this.thrustVal = 0
         this.pause = true
+
+        document.querySelector(".game .Percy #Perseverance").style.marginTop = `0px`
+        document.querySelector(this.path+" #Perseverance").style.transform = `rotate(0deg)`
     }
     render() {
         let Angle = toDegrees(this.Angle)

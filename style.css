@@ -160,8 +160,9 @@ h1{
 .play-button-wrapper {
     display: flex;
     justify-content: right;
+    gap: 0.5em;
 }
-.play-icon, #reset {
+.play-icon, #reset, .reset-icon {
     padding: 0.7em;
     width: 1.5em;
     height: 1.5em;
@@ -174,8 +175,8 @@ h1{
     cursor: pointer;
 }
 #reset {
-    width: auto;
-    height: auto;
+    display: none;
+    margin: 1em;
 }
 #reset img {
     width: 20px;
@@ -199,4 +200,7 @@ h1{
     background-size: 20px;
     background-position: center;
     background-repeat: no-repeat;
+}
+.reset-icon img {
+    width: 100%;
 }
